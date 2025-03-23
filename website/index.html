@@ -100,62 +100,6 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
-                    Abstract
-                </h3>
-                <p class="text-justify">
-                    Recently, 3D reconstruction and generation have demonstrated 
-                    impressive novel view synthesis results, achieving
-                    high fidelity and efficiency. However, a notable conditioning
-                    gap can be observed between these two fields, e.g., scalable
-                    3D scene reconstruction often requires densely captured
-                    views, whereas 3D generation typically relies on a single or
-                    no input view, which significantly limits their applications.
-                    We found that the source of this phenomenon lies in the misalignment 
-                    between 3D constraints and generative priors. To
-                    address this problem, we propose a reconstruction-driven
-                    video diffusion model that learns to condition video frames
-                    on artifact-prone RGB-D renderings. Moreover, we propose 
-                    a cyclical fusion pipeline that iteratively adds restoration 
-                    frames from the generative model to the training set,
-                    enabling progressive expansion and addressing the viewpoint 
-                    saturation limitations seen in previous reconstruction
-                    and generation pipelines. Our evaluation, including view
-                    synthesis from sparse view and masked input, validates the
-                    effectiveness of our approach.
-                </p>
-            </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    <b>
-                        <font color="#E7CCCC">Gen</font>
-                        <font color="#C9C9C9">Fusion</font>
-                    </b> = <font color="#E7CCCC">Video Generation</font> + <font color="#C9C9C9">RGB-D Fusion</font>
-                </h3>
-                <image src="resources/img/thumbnails/pipeline.png" width=90%
-                       style="display: block; margin: auto;"></image>
-                <p class="text-justify">
-                    Our approach contains two stages: video diffusion pre-training (left) and zero-shot
-                    generalization
-                    (right). <b>In pre-training,</b> we first fine-tune a RGB video diffusion model on RGB-D videos
-                    from
-                    a large-scale real-world <a href="https://dl3dv-10k.github.io/DL3DV-10K/">DL3DV-10K</a> video
-                    dataset. Captured videos are patchified, and a random patch sequence is selected for 3D scene
-                    reconstruction, rendering full-frame RGB-D videos as input to our video diffusion model,
-                    supervised
-                    by the original video capture and its monocular depth. <b>During generalization,</b> we treat
-                    reconstruction and generation as a cyclical process, iteratively adding restoration frames from
-                    the
-                    generative model to the training set for artifact removal and scene completion.
-                </p>
-            </div>
-        </div>
-        <br><br>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
                     Reconstruction-driven Video Diffusion Model
                 </h3>
                 <br>
@@ -224,7 +168,196 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+                <h3>
+                    View Extrapolation Results
+                </h3>
+                <br>
+                <div class="text-center ">
+                    <ul class="nav nav-pills center-pills">
+                        <li class="method-pill active dl3dv-method-pill" data-value="2dgs"
+                            onclick="selectCompVideo(this, activeScenePill)"><a>2DGS</a></li>
+                        <li class="method-pill dl3dv-method-pill" data-value="3dgs"
+                            onclick="selectCompVideo(this, activeScenePill)"><a>3DGS</a></li>
+                        <li class="method-pill dl3dv-method-pill" data-value="fsgs"
+                            onclick="selectCompVideo(this, activeScenePill)"><a>FSGS</a></li>
+                    </ul>
+                </div>
+                <br/>
+                <div class="text-center">
+                    <div class="vc-three-video-comparison-container">
+                        <video playsinline autoplay muted loop id="compVideo" vc-caption="2DGS">
+                            <source
+                                    src="https://genapi.sibowu.com/website/resources/videos/dl3dv/2dgs/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
+                        </video>
+                        <video playsinline autoplay muted loop id="ourVideo" vc-caption="Ours">
+                            <source
+                                    src="https://genapi.sibowu.com/website/resources/videos/dl3dv/ours/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
+                        </video>
+                        <video playsinline autoplay muted loop id="inputVideo" vc-caption="Input">
+                            <source
+                                    src="https://genapi.sibowu.com/website/resources/videos/dl3dv/input/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
+                        </video>
+                    </div>
+                    <br>
+                    <p class="text-justify" style="text-align: center;">
+                        <b>Baseline (left) vs GenFusion (right).</b> Our approach achieves artifact-free
+                        novel
+                        view synthesis from narrow field-of-view inputs and outperforms baselines by a
+                        significant margin.
+                    </p>
+                    <div class="pill-row scene-pills">
+                            <span class="pill scene-pill active dl3dv-scene-pill"
+                                  data-value="0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3"
+                                  onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="2cbfe28643b6636f9c70813cae7625aa858a352109493ac70fb429ce94dd55b3"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/2cbfe28643b6636f9c70813cae7625aa858a352109493ac70fb429ce94dd55b3.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="7da3db99059a436adf537bc23309a6a4db9e011696d086f3a64037f7497d9df7"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/7da3db99059a436adf537bc23309a6a4db9e011696d086f3a64037f7497d9df7.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="66fd66cbed40a2d11ecd17ae6d6d60cd60d476616864ecdd351fe69e644f30a1"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/66fd66cbed40a2d11ecd17ae6d6d60cd60d476616864ecdd351fe69e644f30a1.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="71b2dc8a2aa553da09b8b94b9f0d5e8abcca307def74d26301616ee238464d46"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/71b2dc8a2aa553da09b8b94b9f0d5e8abcca307def74d26301616ee238464d46.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="91afb9910b042f7185c2b8e4b6b24b5785dae4542617b3f8005b5492f6d123f7"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/91afb9910b042f7185c2b8e4b6b24b5785dae4542617b3f8005b5492f6d123f7.jpg"
+                                 width="64">
+                            </span>
+                        <br>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="95e4b24092d76881b053d3f68ffd9cdc8a0d44bee9f30bec54b9c850afe8364c"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/95e4b24092d76881b053d3f68ffd9cdc8a0d44bee9f30bec54b9c850afe8364c.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="7705a2edd022de9da3f8cead677287645986e982d9247a21e1992859a59f8335"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/7705a2edd022de9da3f8cead677287645986e982d9247a21e1992859a59f8335.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="b4f53094fd31dcc2de1c1d1fdfeffac5259e9bdf39d77b552ff948e4bdf1fd8e"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/b4f53094fd31dcc2de1c1d1fdfeffac5259e9bdf39d77b552ff948e4bdf1fd8e.jpg"
+                                 width="64">
+                            </span>
+                        <span class="pill scene-pill dl3dv-scene-pill"
+                              data-value="ec305787b70029b782c71c1bf296c3885c7c22619e5661bd40085533ddfee5e4"
+                              onclick="selectCompVideo(activeMethodPill, this)">
+                            <img class="thumbnail-img"
+                                 src="resources/img/thumbnails/ec305787b70029b782c71c1bf296c3885c7c22619e5661bd40085533ddfee5e4.jpg"
+                                 width="64">
+                            </span>
+                    </div>
+                    <script>
+                        activeMethodPill = document.querySelector('.dl3dv-method-pill.active-pill');
+                        activeScenePill = document.querySelector('.dl3dv-scene-pill.active-pill');
+                    </script>
+                </div>
+                <p style="text-align: center; margin-top: 15px; font-size: 18px;"><strong>Evaluation of
+                    Masked
+                    3D Reconstruction
+                    Metrics</strong>
+                </p>
+                <image src="resources/img/plots/average_metrics_plot.png" width=100%
+                       style="display: block; margin: auto;">
+                </image>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Abstract
+                </h3>
+                <p class="text-justify">
+                    Recently, 3D reconstruction and generation have demonstrated 
+                    impressive novel view synthesis results, achieving
+                    high fidelity and efficiency. However, a notable conditioning
+                    gap can be observed between these two fields, e.g., scalable
+                    3D scene reconstruction often requires densely captured
+                    views, whereas 3D generation typically relies on a single or
+                    no input view, which significantly limits their applications.
+                    We found that the source of this phenomenon lies in the misalignment 
+                    between 3D constraints and generative priors. To
+                    address this problem, we propose a reconstruction-driven
+                    video diffusion model that learns to condition video frames
+                    on artifact-prone RGB-D renderings. Moreover, we propose 
+                    a cyclical fusion pipeline that iteratively adds restoration 
+                    frames from the generative model to the training set,
+                    enabling progressive expansion and addressing the viewpoint 
+                    saturation limitations seen in previous reconstruction
+                    and generation pipelines. Our evaluation, including view
+                    synthesis from sparse view and masked input, validates the
+                    effectiveness of our approach.
+                </p>
+            </div>
+        </div>
         <br/>
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    <b>
+                        <font color="#E7CCCC">Gen</font>
+                        <font color="#C9C9C9">Fusion</font>
+                    </b> = <font color="#E7CCCC">Video Generation</font> + <font color="#C9C9C9">RGB-D Fusion</font>
+                </h3>
+                <image src="resources/img/thumbnails/pipeline.png" width=90%
+                       style="display: block; margin: auto;"></image>
+                <p class="text-justify">
+                    Our approach contains two stages: video diffusion pre-training (left) and zero-shot
+                    generalization
+                    (right). <b>In pre-training,</b> we first fine-tune a RGB video diffusion model on RGB-D videos
+                    from
+                    a large-scale real-world <a href="https://dl3dv-10k.github.io/DL3DV-10K/">DL3DV-10K</a> video
+                    dataset. Captured videos are patchified, and a random patch sequence is selected for 3D scene
+                    reconstruction, rendering full-frame RGB-D videos as input to our video diffusion model,
+                    supervised
+                    by the original video capture and its monocular depth. <b>During generalization,</b> we treat
+                    reconstruction and generation as a cyclical process, iteratively adding restoration frames from
+                    the
+                    generative model to the training set for artifact removal and scene completion.
+                </p>
+            </div>
+        </div>
+        <br>
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>
@@ -304,140 +437,6 @@
                 <image src="resources/img/plots/average_metrics_plot_mipnerf360.png" width=100%
                        style="display: block; margin: auto;">
                 </image>
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <h3>
-                            View Extrapolation Results
-                        </h3>
-                        <br>
-                        <div class="text-center ">
-                            <ul class="nav nav-pills center-pills">
-                                <li class="method-pill active dl3dv-method-pill" data-value="2dgs"
-                                    onclick="selectCompVideo(this, activeScenePill)"><a>2DGS</a></li>
-                                <li class="method-pill dl3dv-method-pill" data-value="3dgs"
-                                    onclick="selectCompVideo(this, activeScenePill)"><a>3DGS</a></li>
-                                <li class="method-pill dl3dv-method-pill" data-value="fsgs"
-                                    onclick="selectCompVideo(this, activeScenePill)"><a>FSGS</a></li>
-                            </ul>
-                        </div>
-                        <br/>
-                        <div class="text-center">
-                            <div class="vc-three-video-comparison-container">
-                                <video playsinline autoplay muted loop id="compVideo" vc-caption="2DGS">
-                                    <source
-                                            src="https://genapi.sibowu.com/website/resources/videos/dl3dv/2dgs/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
-                                </video>
-                                <video playsinline autoplay muted loop id="ourVideo" vc-caption="Ours">
-                                    <source
-                                            src="https://genapi.sibowu.com/website/resources/videos/dl3dv/ours/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
-                                </video>
-                                <video playsinline autoplay muted loop id="inputVideo" vc-caption="Input">
-                                    <source
-                                            src="https://genapi.sibowu.com/website/resources/videos/dl3dv/input/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.mp4">
-                                </video>
-                            </div>
-                            <br>
-                            <p class="text-justify" style="text-align: center;">
-                                <b>Baseline (left) vs GenFusion (right).</b> Our approach achieves artifact-free
-                                novel
-                                view synthesis from narrow field-of-view inputs and outperforms baselines by a
-                                significant margin.
-                            </p>
-                            <div class="pill-row scene-pills">
-                            <span class="pill scene-pill active dl3dv-scene-pill"
-                                  data-value="0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3"
-                                  onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/0a1b7c20a92c43c6b8954b1ac909fb2f0fa8b2997b80604bc8bbec80a1cb2da3.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="2cbfe28643b6636f9c70813cae7625aa858a352109493ac70fb429ce94dd55b3"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/2cbfe28643b6636f9c70813cae7625aa858a352109493ac70fb429ce94dd55b3.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/5c3af581028068a3c402c7cbe16ecf9471ddf2897c34ab634b7b1b6cf81aba00.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="7da3db99059a436adf537bc23309a6a4db9e011696d086f3a64037f7497d9df7"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/7da3db99059a436adf537bc23309a6a4db9e011696d086f3a64037f7497d9df7.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="66fd66cbed40a2d11ecd17ae6d6d60cd60d476616864ecdd351fe69e644f30a1"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/66fd66cbed40a2d11ecd17ae6d6d60cd60d476616864ecdd351fe69e644f30a1.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="71b2dc8a2aa553da09b8b94b9f0d5e8abcca307def74d26301616ee238464d46"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/71b2dc8a2aa553da09b8b94b9f0d5e8abcca307def74d26301616ee238464d46.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="91afb9910b042f7185c2b8e4b6b24b5785dae4542617b3f8005b5492f6d123f7"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/91afb9910b042f7185c2b8e4b6b24b5785dae4542617b3f8005b5492f6d123f7.jpg"
-                                 width="64">
-                            </span>
-                                <br>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="95e4b24092d76881b053d3f68ffd9cdc8a0d44bee9f30bec54b9c850afe8364c"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/95e4b24092d76881b053d3f68ffd9cdc8a0d44bee9f30bec54b9c850afe8364c.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="7705a2edd022de9da3f8cead677287645986e982d9247a21e1992859a59f8335"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/7705a2edd022de9da3f8cead677287645986e982d9247a21e1992859a59f8335.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="b4f53094fd31dcc2de1c1d1fdfeffac5259e9bdf39d77b552ff948e4bdf1fd8e"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/b4f53094fd31dcc2de1c1d1fdfeffac5259e9bdf39d77b552ff948e4bdf1fd8e.jpg"
-                                 width="64">
-                            </span>
-                                <span class="pill scene-pill dl3dv-scene-pill"
-                                      data-value="ec305787b70029b782c71c1bf296c3885c7c22619e5661bd40085533ddfee5e4"
-                                      onclick="selectCompVideo(activeMethodPill, this)">
-                            <img class="thumbnail-img"
-                                 src="resources/img/thumbnails/ec305787b70029b782c71c1bf296c3885c7c22619e5661bd40085533ddfee5e4.jpg"
-                                 width="64">
-                            </span>
-                            </div>
-                            <script>
-                                activeMethodPill = document.querySelector('.dl3dv-method-pill.active-pill');
-                                activeScenePill = document.querySelector('.dl3dv-scene-pill.active-pill');
-                            </script>
-                        </div>
-                        <p style="text-align: center; margin-top: 15px; font-size: 18px;"><strong>Evaluation of
-                            Masked
-                            3D Reconstruction
-                            Metrics</strong>
-                        </p>
-                        <image src="resources/img/plots/average_metrics_plot.png" width=100%
-                               style="display: block; margin: auto;">
-                        </image>
-                    </div>
-                </div>
                 <br>
             </div>
             <div class="row">
